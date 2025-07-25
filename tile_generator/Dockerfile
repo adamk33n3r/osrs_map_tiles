@@ -6,7 +6,8 @@ RUN chmod +x Miniconda3-latest-Linux-x86_64.sh
 RUN ./Miniconda3-latest-Linux-x86_64.sh -b -p /usr/local/bin/miniconda3
 RUN ls /usr/local/bin/miniconda3/bin
 ENV PATH="/usr/local/bin/miniconda3/bin:${PATH}"
-
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
 # Create a conda env
 RUN conda create --name vips python=3.7
 
@@ -37,6 +38,7 @@ ADD src src
 ADD java /java
 
 RUN chmod +x /java/gradlew
+RUN ls -al /java
 RUN /java/gradlew -p /java build
 
 CMD [ "conda", "run", "--no-capture-output", "-n", "vips", "python", "./src/tile_generator.py" ]
