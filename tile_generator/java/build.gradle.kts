@@ -35,6 +35,12 @@ fun getLatestRunelite(): String {
 
 dependencies {
     implementation("net.runelite:cache:${getLatestRunelite()}")
+
+    // Previously pulled in transitively via net.runelite:cache; newer cache releases
+    // no longer export them, so declare them explicitly.
+    implementation("commons-cli:commons-cli:1.9.0")
+    implementation("org.antlr:antlr4-runtime:4.13.2")
+    implementation("org.slf4j:slf4j-api:1.7.36")
 }
 
 tasks.shadowJar {
